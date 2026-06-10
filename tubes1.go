@@ -27,54 +27,37 @@ type arrTugas [NMAX]Tugas
 
 func inputString() string {
 	var result string
-	var b byte
-	var started bool = false
-	var done bool = false
-	for !done {
-		_, err := fmt.Scanf("%c", &b)
-		if err != nil {
-			done = true
-		} else {
-			if b == '\n' {
-				if started {
-					done = true
-				}
-			} else if b != '\r' {
-				if !started && (b == ' ' || b == '\t') {
-				} else {
-					result += string(b)
-					started = true
-				}
-			}
-		}
-	}
-	var end int = len(result)
-	for end > 0 && (result[end-1] == ' ' || result[end-1] == '\t') {
-		end--
-	}
-	return result[:end]
+	fmt.Scanln(&result)
+	return result
 }
 
 func inputInt() int {
 	var n int
-	_, err := fmt.Scan(&n)
-	if err != nil {
-		var b byte
-		var done bool = false
-		for !done {
-			_, errScan := fmt.Scanf("%c", &b)
-			if errScan != nil || b == '\n' {
-				done = true
-			}
-		}
-	}
+	fmt.Scan(&n)
 	return n
 }
 
-// Fungsi untuk mengonversi tanggal menjadi minggu ke berapa dalam satu bulan (1-4)
 func hitungMingguKe(tanggal string) (int, int, int) {
-	var d, m, y int = 1, 1, 2024
-	fmt.Sscanf(tanggal, "%d/%d/%d", &d, &m, &y)
+	var d, m, y int = 0, 0, 0
+	var i int = 0
+	var bagian int = 0
+	var num int = 0
+
+	for i < len(tanggal) {
+		if tanggal[i] >= '0' && tanggal[i] <= '9' {
+			num = num*10 + int(tanggal[i]-'0')
+		} else if tanggal[i] == '/' {
+			if bagian == 0 {
+				d = num
+			} else if bagian == 1 {
+				m = num
+			}
+			num = 0
+			bagian = bagian + 1
+		}
+		i = i + 1
+	}
+	y = num
 
 	if d < 1 {
 		d = 1
@@ -82,7 +65,6 @@ func hitungMingguKe(tanggal string) (int, int, int) {
 	if m < 1 {
 		m = 1
 	}
-
 	if d <= 7 {
 		return 1, m, y
 	} else if d <= 14 {
@@ -105,7 +87,7 @@ func skorEmosiString(skor int) string {
 	} else if skor == 5 {
 		return "5 (Awesome!)"
 	} else {
-		return fmt.Sprintf("%d", skor)
+		return " "
 	}
 }
 
@@ -216,15 +198,15 @@ func tampilMood(T arrMood, n int) {
 		fmt.Println("Belum ada catatan mood.")
 		return
 	}
-	fmt.Println("----------------------------------------------------------------")
+	fmt.Println("--------------------------------------------------------------------------")
 	fmt.Printf("%-5s %-15s %-20s %-15s %-10s\n", "ID", "Skor Emosi", "Deskripsi", "Tanggal", "Minggu Ke")
-	fmt.Println("----------------------------------------------------------------")
+	fmt.Println("--------------------------------------------------------------------------")
 	var i int = 0
 	for i < n {
 		fmt.Printf("%-5d %-15s %-20s %-15s %-10d\n", T[i].id, skorEmosiString(T[i].skorEmosi), T[i].deskripsi, T[i].tanggal, T[i].mingguKe)
 		i = i + 1
 	}
-	fmt.Println("----------------------------------------------------------------")
+	fmt.Println("--------------------------------------------------------------------------")
 }
 
 func tambahTugas(T *arrTugas, n *int, idCounter *int) {
@@ -331,7 +313,7 @@ func tampilTugas(T arrTugas, n int) {
 	for i < n {
 		var labelPrioritas string
 		if T[i].prioritas == 1 {
-			labelPrioritas = "Tinggi"
+			labelPrioritas = "Tinggi"7
 		} else if T[i].prioritas == 2 {
 			labelPrioritas = "Sedang"
 		} else {
@@ -446,7 +428,6 @@ func menuCariMood(T *arrMood, n int) {
 		skor = inputInt()
 
 		selectionSortMood(T, n)
-		fmt.Println("(Sistem telah mengurutkan data secara otomatis untuk pencarian)")
 
 		var idx int = binarySearchMood(*T, n, skor)
 		if idx == -1 {
@@ -513,7 +494,6 @@ func menuCariTugas(T *arrTugas, n int) {
 		durasi = inputInt()
 
 		insertionSortTugasDurasi(T, n)
-		fmt.Println("(Sistem telah mengurutkan data secara otomatis untuk pencarian)")
 
 		var idx int = binarySearchTugas(*T, n, durasi)
 		if idx == -1 {
@@ -634,7 +614,7 @@ func statistikMood(T arrMood, n int) {
 	}
 
 	fmt.Println("\n=== Statistik Tren Suasana Hati Mingguan (per Bulan) ===")
-	fmt.Println("---------------------------------------------")
+	fmt.Println("--------------------------------------------------------")
 
 	var mingguSudahDiproses [NMAX]int
 	var nUnik int = 0
@@ -645,7 +625,7 @@ func statistikMood(T arrMood, n int) {
 		var sudah bool = false
 		var j int = 0
 		for j < nUnik {
-			if mingguSudahDiproses[j] == mg {
+			if mingguSudahDiproses[j]8 == mg {
 				sudah = true
 			}
 			j = j + 1
@@ -691,7 +671,7 @@ func statistikMood(T arrMood, n int) {
 		fmt.Printf("Tahun %d Bulan %d Minggu ke-%d : %.2f (dari %d catatan)\n", tahun, bulan, minggu, rata, jumlah)
 		u = u + 1
 	}
-	fmt.Println("---------------------------------------------")
+	fmt.Println("--------------------------------------------------------")
 }
 
 func statistikTugas(T arrTugas, n int) {
