@@ -312,7 +312,7 @@ func tampilTugas(T arrTugas, n int) {
 	for i < n {
 		var labelPrioritas string
 		if T[i].prioritas == 1 {
-			labelPrioritas = "Tinggi"7
+			labelPrioritas = "Tinggi"
 		} else if T[i].prioritas == 2 {
 			labelPrioritas = "Sedang"
 		} else {
@@ -624,7 +624,7 @@ func statistikMood(T arrMood, n int) {
 		var sudah bool = false
 		var j int = 0
 		for j < nUnik {
-			if mingguSudahDiproses[j]8 == mg {
+			if mingguSudahDiproses[j] == mg {
 				sudah = true
 			}
 			j = j + 1
