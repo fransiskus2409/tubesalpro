@@ -29,10 +29,10 @@ func inputString() string {
 	var result string
 	var c int
 	fmt.Scanf("%c", &c)
-	for c == '\n' {
+	for c == '\n' || c == '\r' {
 		fmt.Scanf("%c", &c)
 	}
-	for c != '\n' {
+	for c != '\n' && c != '\r' {
 		result = result + string(c)
 		fmt.Scanf("%c", &c)
 	}
