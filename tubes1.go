@@ -1,4 +1,5 @@
 package main
+
 import "fmt"
 
 const NMAX int = 100
@@ -26,7 +27,15 @@ type arrTugas [NMAX]Tugas
 
 func inputString() string {
 	var result string
-	fmt.Scanln(&result)
+	var c int
+	fmt.Scanf("%c", &c)
+	for c == '\n' {
+		fmt.Scanf("%c", &c)
+	}
+	for c != '\n' {
+		result = result + fmt.Sprintf("%c", c)
+		fmt.Scanf("%c", &c)
+	}
 	return result
 }
 
