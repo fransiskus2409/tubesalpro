@@ -1,1 +1,3 @@
 # TUGAS BESAR ALGORITMA PEMROGRAMAN 2
+Fransiskus Parsaoran - 103012300454
+Nahdah Runa Musyaffa - 103012530054
