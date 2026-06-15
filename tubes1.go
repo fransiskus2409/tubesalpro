@@ -33,7 +33,7 @@ func inputString() string {
 		fmt.Scanf("%c", &c)
 	}
 	for c != '\n' {
-		result = result + fmt.Sprintf("%c", c)
+		result = result + string(c)
 		fmt.Scanf("%c", &c)
 	}
 	return result
